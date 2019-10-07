@@ -24,21 +24,21 @@ arcpy.AddMessage(ws)
 
 dem_min=BlockStatistics(dem,NbrRectangle(6,6,"CELL"),"MINIMUM")
 dem_min.save(ws+"\dem_min")
-arcpy.AddMessage("Minumun Dem ulu˛turuluyor")
+arcpy.AddMessage("Minumun Dem ulu√æturuluyor")
 dem_mean=BlockStatistics(dem,NbrRectangle(6,6,"CELL"),"MEAN")
 dem_mean.save(ws+"\dem_mean")
-arcpy.AddMessage("Mean Dem ulu˛turuluyor")
+arcpy.AddMessage("Mean Dem ulu√æturuluyor")
 
-arcpy.AddMessage("RG dosyas˝ olu˛turuluyor")
+arcpy.AddMessage("RG dosyas√Ω olu√æturuluyor")
 roughness=dem_mean-dem_min
 roughness.save(ws+"/rg.tif")
 
-arcpy.AddMessage("S˝n˝fland˝rma dosyas˝ olu˛turuluyor")
+arcpy.AddMessage("S√Ωn√Ωfland√Ωrma dosyas√Ω olu√æturuluyor")
 arcpy.env.extent=roughness
 rec_rg=Reclassify(roughness,"VALUE",RemapRange([[0,0.1,1],[0.1,0.5,2],[0.5,1,3],[1,2.5,4],[2.5,10,5],[10,100,6]]),"NODATA")
 rec_rg.save(ws+"/rec_rg.tif")
 
-##Soil tiplerini ayr˝ ayr˝ bˆl¸yor
+##Soil tiplerini ayr√Ω ayr√Ω b√∂l√ºyor
 
 del_fields0 = [c.name for c in arcpy.ListFields(st) if not c.required]
 for b in del_fields0:
@@ -54,7 +54,7 @@ arcpy.DeleteField_management(st, del_fields0)
 arcpy.AddField_management(st,"rg70","DOUBLE")
 arcpy.AddField_management(st,"rg20","DOUBLE")
 arcpy.AddField_management(st,"rg10","DOUBLE")
-arcpy.AddMessage("Zemin tipleri ayr˝ ayr˝ kaydediliyor")
+arcpy.AddMessage("Zemin tipleri ayr√Ω ayr√Ω kaydediliyor")
 
 
 with arcpy.da.SearchCursor(st,"soiltype") as scr:
@@ -100,7 +100,7 @@ for i in mask_data:
 
 rec_data=arcpy.ListFiles("st_*.tif")
 
-##Raster lar tabloya dˆn¸˛t¸r¸l¸yor
+##Raster lar tabloya d√∂n√º√æt√ºr√ºl√ºyor
 for j in rec_data:
     ad2=str(j)
     ad2.split()
@@ -659,7 +659,7 @@ for l in table_data:
     else:
         arcpy.AddMessage("HATA")
         
-##Cell Size ayarlayal˝m
+##Cell Size ayarlayal√Ωm
 arcpy.env.extent=dem
 arcpy.env.cellSize = cellsize
 
@@ -670,7 +670,7 @@ soilras=arcpy.PolygonToRaster_conversion(st,"soiltype","soilras","CELL_CENTER","
 
 arcpy.env.workspace=folder
 
-##ASC format˝nda kaydettiimizde decimal ayrac˝ virg¸l oluyor bu y¸zden TXT kaydedeceiz
+##ASC format√Ωnda kaydetti√∞imizde decimal ayrac√Ω virg√ºl oluyor bu y√ºzden TXT kaydedece√∞iz
 arcpy.RasterToASCII_conversion(rg10ras,"rg10.txt")
 arcpy.RasterToASCII_conversion(rg20ras,"rg20.txt")
 arcpy.RasterToASCII_conversion(rg70ras,"rg70.txt")
@@ -684,24 +684,30 @@ arcpy.env.workspace=ws
 
     
 
-##Rocks tablosu alanlar˝n hepsi siliniyor nid alan˝ ekleniyor sadece nid alan˝n˝n kalmas˝ salan˝yor
+##Rocks tablosu alanlar√Ωn hepsi siliniyor nid alan√Ω ekleniyor sadece nid alan√Ωn√Ωn kalmas√Ω sa√∞lan√Ωyor
 del_fields = [b.name for b in arcpy.ListFields(rocks) if not b.required]
 bak="".join(del_fields)
 ara=bak.find("nid")
-
+ara2=bak.find("NID")
+##nid varsa
 if ara!=-1:
     arcpy.AddMessage(del_fields)
     nsira=del_fields.index("nid")
     del del_fields[nsira]
     arcpy.DeleteField_management(rocks, del_fields)
-   
-    
+##NID varsa
+elif ara2!=-1:
+    arcpy.AddMessage(del_fields)
+    nsira=del_fields.index("NID")
+    del del_fields[nsira]
+    arcpy.DeleteField_management(rocks, del_fields)
+##NID yada nid yoksa
 else:
     arcpy.AddField_management(rocks,"NID","SHORT")
     del_fields = [b.name for b in arcpy.ListFields(rocks) if not b.required]
     arcpy.AddMessage(del_fields)
-    nsira1=del_fields.index("nid")
-    del del_fields[nsira1]
+    nsira=del_fields.index("NID")
+    del del_fields[nsira]
     arcpy.DeleteField_management(rocks, del_fields)
     
 block="""rec=0
@@ -737,7 +743,7 @@ arcpy.CalculateField_management("mbg.shp","d3",'!MBG_Length!',"PYTHON")
 
 
 
-##Kayalar˝n y¸kseklikleri hesaplan˝yor
+##Kayalar√Ωn y√ºkseklikleri hesaplan√Ωyor
 arcpy.env.cellSize = dem
 
 arcpy.AddMessage("CALCULATING h values")
@@ -746,7 +752,7 @@ arcpy.AddField_management("zonal.dbf","h","DOUBLE")
 arcpy.CalculateField_management("zonal.dbf","h",'!MEAN!-!MIN!',"PYTHON")
 
 arcpy.env.cellSize = cellsize
-##Y¸kseklikler kontrol ediliyor hata olanlara 1 yazacak
+##Y√ºkseklikler kontrol ediliyor hata olanlara 1 yazacak
 arcpy.AddMessage("CHECKING h values")
 block2="""
 def bak(a,b):
@@ -771,7 +777,7 @@ arcpy.CalculateField_management("mbg.shp","en_boy",'!d2!/!d3!',"PYTHON")
 arcpy.CalculateField_management("mbg.shp","mbg_alan",'!d2!*!d3!',"PYTHON")
 arcpy.CalculateField_management("mbg.shp","elips_alan",'math.pi*(!d2!/2)*(!d3!/2)',"PYTHON")
 
-##disk ˛ekilli bloklar belirleniyor
+##disk √æekilli bloklar belirleniyor
 
 arcpy.AddMessage("DEFINING block shapes")
 block_disk="""def disk(a,b,c):
@@ -799,7 +805,7 @@ j_fields="POLY_AREA","mbg_alan","elips_alan","d1","d2","d3","blshape","density",
 arcpy.JoinField_management(rocks,"NID","mbg.shp","NID",j_fields)
 arcpy.AddField_management(rocks,"ao","DOUBLE")
 arcpy.CalculateField_management(rocks,"ao",'!POLY_AREA!/!mbg_alan!',"PYTHON")
-##k¸re olan bloklar belirleniyor
+##k√ºre olan bloklar belirleniyor
 block_kure="""def kure(bs,eb,he,yog):
     if (bs==0 and eb>=0.8 and he>=0.8 and yog>=0.07):
         return 3
@@ -811,7 +817,7 @@ arcpy.CalculateField_management(rocks,"blshape",'kure(!blshape!,!en_boy!,!h_en!,
 
 
 
-##elips ve dikdˆrtgen olan bloklar belirleniyor
+##elips ve dikd√∂rtgen olan bloklar belirleniyor
 up_fields="ao","yogunluk","h_en","en_boy","blshape"
 
 
@@ -892,7 +898,7 @@ for f in asc_files:
 ##temp klasor siliniyor
 
 klasor_sil=folder+"/"+"temp"
-## Silmekten vazgeÁtimmmmmm
+## Silmekten vazge√ßtimmmmmm
 
 
 
@@ -900,9 +906,9 @@ klasor_sil=folder+"/"+"temp"
 ##rmtree(klasor_sil)
 ##
 ##if os.path.exists:
-##    arcpy.AddMessage("BIR SORUN VAR temp DOSYALARI S›LEMED›M")
+##    arcpy.AddMessage("BIR SORUN VAR temp DOSYALARI S√ùLEMED√ùM")
 ##else:
-##    arcpy.AddMessage("GEC›C› DOSYALAR DA S›L›ND›_ HER ﬁEY YOLUNDA")
+##    arcpy.AddMessage("GEC√ùC√ù DOSYALAR DA S√ùL√ùND√ù_ HER √ûEY YOLUNDA")
 
 arcpy.AddMessage(" .............................FINISHED.............................")
 
