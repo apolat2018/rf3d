@@ -1,7 +1,7 @@
 # rf3d
-Rf3d data prep script
+## Rf3d data prep script
 
-Nasıl kullanılır?
+# Nasıl kullanılır?
 Bu script ArcGIS yazılımı içinde bir araç(tool) olarak kullanılabildiği gibi python betiği olarak da çalıştırılabilir.
 ArcGIS yazılımında kullanmak için;
 - RF3D_Tool.tbx dosyasını ve rf3d_data_prepare dosyasını bir klasöre indiriniz.
