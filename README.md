@@ -19,6 +19,8 @@ OK
 
 - input_Data_Prepretaion_for_RF3D scriptini çift tıklayarak çalıştırınız.
 
+<img src="https://github.com/apolat2018/rf3d/blob/master/parameters.PNG" alt="parameters"/>
+
 Gerekli parametreleri girdikten sonra OK butonu na basarak işlemi tamamlayabilirsiniz.
 
 Kolay gelsin; İyi çalışmalar.
@@ -27,3 +29,4 @@ Dr.Ali POLAT
 polatbey@gmail.com
 
 
+s
