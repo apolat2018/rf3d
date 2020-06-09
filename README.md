@@ -7,7 +7,9 @@ ArcGIS yazılımında kullanmak için;
 - RF3D_Tool.tbx dosyasını ve rf3d_data_prepare dosyasını bir klasöre indiriniz.
 - ArcGIS yazılımını açınız.
 - ArcCatalog kısmından aracı indirdiğiniz klasorü (connect to folder seçeneği ile) cataloğa dahil ediniz.
+
 <img src="https://github.com/apolat2018/rf3d/blob/master/connect_To_folder.PNG" alt="connect to folder"/>
+
 - indirdiğiniz arac alet kutusu şeklinde gözükecektir.
 - Bu şeklin altında "input_Data_Prepretaion_for_RF3D" adlı script dosyasını görmeniz lazım.
 - Bu dosyanın üzerinde sağ tuşu tıklayınız.
