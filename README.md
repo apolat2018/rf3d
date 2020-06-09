@@ -10,10 +10,14 @@ ArcGIS yazılımında kullanmak için;
 <img src="https://github.com/apolat2018/rf3d/blob/master/connect_To_folder.PNG" alt="connect to folder"/>
 - indirdiğiniz arac alet kutusu şeklinde gözükecektir.
 - Bu şeklin altında "input_Data_Prepretaion_for_RF3D" adlı script dosyasını görmeniz lazım.
+
 <img src="https://github.com/apolat2018/rf3d/blob/master/tool.PNG" alt="ToolBox"/>
+
 - Bu dosyanın üzerinde sağ tuşu tıklayınız.
 - Properties menüsünü açarak açılan pencerede source kısmına indirmiş olduğunuz rf3d_data_prepare.py uzantılı dosyayı seçiniz.
+
 OK
+
 - input_Data_Prepretaion_for_RF3D scriptini çift tıklayarak çalıştırınız.
 
 Gerekli parametreleri girdikten sonra OK butonu na basarak işlemi tamamlayabilirsiniz.
