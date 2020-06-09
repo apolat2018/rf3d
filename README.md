@@ -1,5 +1,4 @@
-# rf3d
-## Rf3d data prep script
+# RockyFor3D için veri hazırlama python betiği (script)
 
 ### Nasıl kullanılır?
 Bu script ArcGIS yazılımı içinde bir araç(tool) olarak kullanılabildiği gibi python betiği olarak da çalıştırılabilir.
