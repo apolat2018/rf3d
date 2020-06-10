@@ -44,16 +44,20 @@ rec_rg.save(ws+"/rec_rg.tif")
 ##Zemin tiplerini ayr� ayr� b�l�yor
 
 del_fields0 = [c.name for c in arcpy.ListFields(st) if not c.required]
-for b in del_fields0:
-    arcpy.AddMessage("silinecekler: "+b)
-    if b=="soiltype":
-        d=del_fields0.index("soiltype")
-        del del_fields0[d]
-    else:
-        del del_fields0[1]
+if len(del_fields0)>1:
+
+    for b in del_fields0:
+        arcpy.AddMessage("silinecekler: "+b)
+        arcpy.AddMessage(len(del_fields0))
+        if b=="soiltype":
+            d=del_fields0.index("soiltype")
+            del del_fields0[d]
+        else:
+            del del_fields0[1]
+    arcpy.AddMessage(del_fields0)
+    arcpy.DeleteField_management(st, del_fields0)
         
-arcpy.AddMessage(del_fields0)
-arcpy.DeleteField_management(st, del_fields0)
+
 arcpy.AddField_management(st,"rg70","DOUBLE")
 arcpy.AddField_management(st,"rg20","DOUBLE")
 arcpy.AddField_management(st,"rg10","DOUBLE")
