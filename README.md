@@ -25,7 +25,7 @@ Gerekli parametreleri girdikten sonra OK butonu na basarak işlemi tamamlayabili
 
 Kolay gelsin; İyi çalışmalar.
 
-Kaynak göstermek için:
+Detaylı bilgi ve kaynak göstermek için:
 https://doi.org/10.17482/uumfd.769109
 
 Dr.Ali POLAT
