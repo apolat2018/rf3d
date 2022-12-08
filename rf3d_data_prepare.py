@@ -45,7 +45,7 @@ rec_rg.save(ws+"/rec_rg.tif")
 
 del_fields0 = [c.name for c in arcpy.ListFields(st) if not c.required]
 if len(del_fields0)>1:
-
+    arcpy.AddMessage(del_fields0)
     for b in del_fields0:
         arcpy.AddMessage("silinecekler: "+b)
         arcpy.AddMessage(len(del_fields0))
