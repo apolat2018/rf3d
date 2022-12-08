@@ -27,16 +27,16 @@ arcpy.AddMessage(ws)
 
 dem_min=BlockStatistics(dem,NbrRectangle(4,4,"CELL"),"MINIMUM")
 dem_min.save(ws+"\dem_min")
-arcpy.AddMessage("Minumun Dem ulu�turuluyor")
+arcpy.AddMessage("Minumun Dem olusturuluyor")
 dem_mean=BlockStatistics(dem,NbrRectangle(4,4,"CELL"),"MEAN")
 dem_mean.save(ws+"\dem_mean")
-arcpy.AddMessage("Mean Dem ulu�turuluyor")
+arcpy.AddMessage("Mean Dem olusturuluyor")
 
-arcpy.AddMessage("RG dosyas� olu�turuluyor")
+arcpy.AddMessage("RG dosyasi olusturuluyor")
 roughness=dem_mean-dem_min
 roughness.save(ws+"/rg.tif")
 
-arcpy.AddMessage("S�n�fland�rma dosyas� olu�turuluyor")
+arcpy.AddMessage("Siniflandirma dosyasi olusturuluyor")
 arcpy.env.extent=roughness
 rec_rg=Reclassify(roughness,"VALUE",RemapRange([[0,0.1,1],[0.1,0.5,2],[0.5,1,3],[1,2.5,4],[2.5,10,5],[10,100,6]]),"NODATA")
 rec_rg.save(ws+"/rec_rg.tif")
