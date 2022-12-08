@@ -23,7 +23,7 @@ OK
 
 Gerekli parametreleri girdikten sonra OK butonu na basarak işlemi tamamlayabilirsiniz.
 
-### yazılımı test etmek için demo_veri klasörü içerisine yükseklik (dem), zemin türleri (st.shp) ve kaya (rocks.shp) dosyaları eklenmiştir.
+#### Yazılımı test etmek için demo_veri klasörü içerisine yükseklik (dem), zemin türleri (st.shp) ve kaya (rocks.shp) dosyaları eklenmiştir.
 
 Kolay gelsin; İyi çalışmalar.
 
