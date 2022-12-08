@@ -41,7 +41,7 @@ arcpy.env.extent=roughness
 rec_rg=Reclassify(roughness,"VALUE",RemapRange([[0,0.1,1],[0.1,0.5,2],[0.5,1,3],[1,2.5,4],[2.5,10,5],[10,100,6]]),"NODATA")
 rec_rg.save(ws+"/rec_rg.tif")
 
-##Zemin tiplerini ayr� ayr� b�l�yor
+##Zemin tiplerini ayri ayri boluyor
 
 del_fields0 = [c.name for c in arcpy.ListFields(st) if not c.required]
 if len(del_fields0)>1:
@@ -61,7 +61,7 @@ if len(del_fields0)>1:
 arcpy.AddField_management(st,"rg70","DOUBLE")
 arcpy.AddField_management(st,"rg20","DOUBLE")
 arcpy.AddField_management(st,"rg10","DOUBLE")
-arcpy.AddMessage("Zemin tipleri ayr� ayr� kaydediliyor")
+arcpy.AddMessage("Zemin tipleri ayri ayri kaydediliyor")
 
 
 with arcpy.da.SearchCursor(st,"soiltype") as scr:
@@ -107,7 +107,7 @@ for i in mask_data:
 
 rec_data=arcpy.ListFiles("st_*.tif")
 
-##Raster lar tabloya d�n��t�r�l�yor
+##Raster lar tabloya donusturuluyor
 for j in rec_data:
     ad2=str(j)
     ad2.split()
@@ -169,7 +169,7 @@ for l in table_data:
     st1=ls[7]
     arcpy.AddMessage(st1)
     
-    if l=="tbl_st_0.dbf":#Zemin tipi 0 ise Rg değerleri 100 olacak
+    if l=="tbl_st_0.dbf":#Zemin tipi 0 ise Rg degerleri 100 olacak
         with arcpy.da.UpdateCursor(st,st_flds) as ap:
             for row in ap:
                 if row[0]==0:
@@ -629,7 +629,7 @@ snfla="""def sinifla(deger):#bulunan arazi pürüzlülüğü değerleri RF3Dnin 
 arcpy.CalculateField_management(st,"rg70","sinifla(!rg70!)","PYTHON",snfla)
 arcpy.CalculateField_management(st,"rg20","sinifla(!rg20!)","PYTHON",snfla)
 arcpy.CalculateField_management(st,"rg10","sinifla(!rg10!)","PYTHON",snfla)
-##Cell Size ayarlayal�m
+##Cell Size ayarlayalim
 arcpy.env.extent=dem
 arcpy.env.cellSize = cellsize
 
@@ -640,7 +640,7 @@ soilras=arcpy.PolygonToRaster_conversion(st,"soiltype","soilras","CELL_CENTER","
 
 arcpy.env.workspace=folder
 
-##ASC format�nda kaydetti�imizde decimal ayrac� virg�l oluyor bu y�zden TXT kaydedece�iz
+##ASC formatinda kaydettigimizde decimal ayraci virgul oluyor bu yuzden TXT kaydedecegiz
 arcpy.RasterToASCII_conversion(rg10ras,"rg10.txt")
 arcpy.RasterToASCII_conversion(rg20ras,"rg20.txt")
 arcpy.RasterToASCII_conversion(rg70ras,"rg70.txt")
@@ -654,7 +654,7 @@ arcpy.env.workspace=ws
 
     
 
-##Rocks tablosu alanlar�n hepsi siliniyor nid alan� ekleniyor sadece nid alan�n�n kalmas� sa�lan�yor
+##Rocks tablosu alanlarin hepsi siliniyor nid alani ekleniyor sadece nid alaninin kalmasi saglaniyor
 
 del_fields = [b.name for b in arcpy.ListFields(rocks) if not b.required]
 arcpy.AddMessage(del_fields)
@@ -699,7 +699,7 @@ arcpy.AddField_management(rocks,"yogunluk","DOUBLE")
 arcpy.AddField_management(rocks,"blshape","SHORT")
 arcpy.AddField_management(rocks,"density","DOUBLE")
 arcpy.CalculateField_management(rocks,"NID",expression,"PYTHON",block)
-arcpy.CalculateField_management(rocks,"density",density,"PYTHON")##Kaya�lar�n yo�unlu�u
+arcpy.CalculateField_management(rocks,"density",density,"PYTHON")##Kayaclarin yogunlugu
 
 arcpy.AddGeometryAttributes_management(rocks,"PERIMETER_LENGTH","METERS","SQUARE_METERS","")
 arcpy.AddGeometryAttributes_management(rocks,"AREA","METERS","SQUARE_METERS","")
@@ -712,7 +712,7 @@ arcpy.CalculateField_management("mbg.shp","d3",'!MBG_Length!',"PYTHON")
 
 
 
-##Kayalar�n y�kseklikleri hesaplan�yor
+##Kayalarin yukseklikleri hesaplaniyor
 arcpy.env.cellSize = dem
 
 arcpy.AddMessage("CALCULATING h values")
@@ -721,7 +721,7 @@ arcpy.AddField_management("zonal.dbf","h","DOUBLE")
 arcpy.CalculateField_management("zonal.dbf","h",'!MEAN!-!MIN!',"PYTHON")
 
 arcpy.env.cellSize = cellsize
-##Y�kseklikler kontrol ediliyor hata olanlara 1 yazacak
+##Yukseklikler kontrol ediliyor hata olanlara 1 yazacak
 arcpy.AddMessage("CHECKING h values")
 block2="""
 def bak(a,b):
@@ -746,7 +746,7 @@ arcpy.CalculateField_management("mbg.shp","en_boy",'!d2!/!d3!',"PYTHON")
 arcpy.CalculateField_management("mbg.shp","mbg_alan",'!d2!*!d3!',"PYTHON")
 arcpy.CalculateField_management("mbg.shp","elips_alan",'math.pi*(!d2!/2)*(!d3!/2)',"PYTHON")
 
-##disk �ekilli bloklar belirleniyor
+##disk sekilli bloklar belirleniyor
 
 arcpy.AddMessage("DEFINING block shapes")
 block_disk="""def disk(a,b,c):
@@ -774,7 +774,7 @@ j_fields="POLY_AREA","mbg_alan","elips_alan","d1","d2","d3","blshape","density",
 arcpy.JoinField_management(rocks,"NID","mbg.shp","NID",j_fields)
 arcpy.AddField_management(rocks,"ao","DOUBLE")
 arcpy.CalculateField_management(rocks,"ao",'!POLY_AREA!/!mbg_alan!',"PYTHON")
-##k�re olan bloklar belirleniyor
+##kure olan bloklar belirleniyor
 block_kure="""def kure(bs,eb,he,yog):
     if (bs==0 and eb>=0.8 and he>=0.8 and yog>=0.07):
         return 3
@@ -786,7 +786,7 @@ arcpy.CalculateField_management(rocks,"blshape",'kure(!blshape!,!en_boy!,!h_en!,
 
 
 
-##elips ve dikd�rtgen olan bloklar belirleniyor
+##elips ve dikdortgen olan bloklar belirleniyor
 up_fields="ao","yogunluk","h_en","en_boy","blshape"
 
 
@@ -869,7 +869,7 @@ for f in asc_files:
 ##temp klasor siliniyor
 
 klasor_sil=folder+"/"+"temp"
-## Silmekten vazge�timmmmmm
+## Silmekten vazgectimmmmmm
 
 
 
