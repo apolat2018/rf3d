@@ -657,27 +657,11 @@ arcpy.env.workspace=ws
 ##Rocks tablosu alanlarin hepsi siliniyor nid alani ekleniyor sadece nid alaninin kalmasi saglaniyor
 
 del_fields = [b.name for b in arcpy.ListFields(rocks) if not b.required]
-arcpy.AddMessage(del_fields)
+arcpy.AddField_management(rocks,"rq","SHORT")
 
-bak="".join(del_fields)
-arcpy.AddMessage(bak)
-ara=bak.find("NID")
-arcpy.AddMessage(ara)
-
-if ara != -1:
-    arcpy.AddMessage(del_fields)
-    nsira=del_fields.index("NID")
-    del del_fields[nsira]
-    arcpy.DeleteField_management(rocks, del_fields)
-   
-    
-else:
-    arcpy.AddField_management(rocks,"NID","SHORT")
-    del_fields = [b.name for b in arcpy.ListFields(rocks) if not b.required]
-    arcpy.AddMessage(del_fields)
-    nsira1=del_fields.index("NID")
-    del del_fields[nsira1]
-    arcpy.DeleteField_management(rocks, del_fields)
+arcpy.DeleteField_management(rocks, del_fields)
+arcpy.AddField_management(rocks,"NID","SHORT")
+        
     
 block="""rec=0
 def yaz():

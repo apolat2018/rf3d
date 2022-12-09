@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="tr"><Esri><CreaDate>20221209</CreaDate><CreaTime>10562200</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce><DataProperties><lineage><Process ToolSource="c:\program files (x86)\arcgis\desktop10.4\ArcToolbox\Toolboxes\Conversion Tools.tbx\PolygonToRaster" Date="20221209" Time="105622">PolygonToRaster C:\Users\ap\Documents\GitHub\rf3d\demo_veri\st.shp rg70 C:\Users\ap\Documents\GitHub\rf3d\demo_veri/temp\rg70ras CELL_CENTER NONE 0.5</Process></lineage></DataProperties></Esri></metadata>
