@@ -657,7 +657,10 @@ arcpy.env.workspace=ws
 ##Rocks tablosu alanlarin hepsi siliniyor nid alani ekleniyor sadece nid alaninin kalmasi saglaniyor
 
 del_fields = [b.name for b in arcpy.ListFields(rocks) if not b.required]
-arcpy.AddField_management(rocks,"rq","SHORT")
+
+import random
+temp_field="a"+str(random.randint(0,10))
+arcpy.AddField_management(rocks,temp_field,"SHORT")
 
 arcpy.DeleteField_management(rocks, del_fields)
 arcpy.AddField_management(rocks,"NID","SHORT")
