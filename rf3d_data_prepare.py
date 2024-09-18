@@ -3,6 +3,7 @@
 import arcpy,os,sys
 from arcpy.sa import *
 from arcpy import env
+import shutil
 reload(sys)
 sys.setdefaultencoding("utf8")
 arcpy.env.overwriteOutput = True
@@ -23,13 +24,37 @@ arcpy.CreateFolder_management(folder,"temp")
 ws=folder+"/"+"temp"
 arcpy.env.workspace=ws
 arcpy.AddMessage(ws)
+#rock ve soil type shp verileri temp klasörüne taşınıyor
+name_rock=rocks.split("\\")[-1].split(".")[0]
+name_soiltype=st.split("\\")[-1].split(".")[0]
+rock_path=rocks.split("\\")[:-1]
+rock_path="\\".join(rock_path)
+soil_path=st.split("\\")[:-1]
+soil_path="\\".join(soil_path)
+
+
+for i in os.listdir(rock_path):
+    a=i.split(".",1)
+    if a[0]==name_rock and len(a[1])==3:
+        
+        shutil.copy(rock_path+"/"+str(i),ws+"/"+str(i))
+for i in os.listdir(soil_path):
+    a=i.split(".",1)
+    if a[0]==name_soiltype and len(a[1])==3:
+       
+        shutil.copy(soil_path+"/"+str(i),ws+"/"+str(i))
+
+rocks=ws+"/"+name_rock+".shp"
+st=ws+"/"+name_soiltype+".shp"
+
+#sys.exit()#-----------------------------------------------
 
 
 dem_min=BlockStatistics(dem,NbrRectangle(4,4,"CELL"),"MINIMUM")
-dem_min.save(ws+"\dem_min")
+dem_min.save(ws+"\dem_min.tif")
 arcpy.AddMessage("Minumun Dem olusturuluyor")
 dem_mean=BlockStatistics(dem,NbrRectangle(4,4,"CELL"),"MEAN")
-dem_mean.save(ws+"\dem_mean")
+dem_mean.save(ws+"\dem_mean.tif")
 arcpy.AddMessage("Mean Dem olusturuluyor")
 
 arcpy.AddMessage("RG dosyasi olusturuluyor")
@@ -206,7 +231,7 @@ for l in table_data:
                 r70=[]
                 r20=[]
                 r10=[]
-                for k in lst_0y:
+                for k in lst_1y:
                    
                     x=70-k
                     y=20-k
@@ -633,10 +658,10 @@ arcpy.CalculateField_management(st,"rg10","sinifla(!rg10!)","PYTHON",snfla)
 arcpy.env.extent=dem
 arcpy.env.cellSize = cellsize
 
-rg10ras=arcpy.PolygonToRaster_conversion(st,"rg10","rg10ras","CELL_CENTER","",cellsize)
-rg20ras=arcpy.PolygonToRaster_conversion(st,"rg20","rg20ras","CELL_CENTER","",cellsize)
-rg70ras=arcpy.PolygonToRaster_conversion(st,"rg70","rg70ras","CELL_CENTER","",cellsize)
-soilras=arcpy.PolygonToRaster_conversion(st,"soiltype","soilras","CELL_CENTER","",cellsize)
+rg10ras=arcpy.PolygonToRaster_conversion(st,"rg10","rg10ras.tif","CELL_CENTER","",cellsize)
+rg20ras=arcpy.PolygonToRaster_conversion(st,"rg20","rg20ras.tif","CELL_CENTER","",cellsize)
+rg70ras=arcpy.PolygonToRaster_conversion(st,"rg70","rg70ras.tif","CELL_CENTER","",cellsize)
+soilras=arcpy.PolygonToRaster_conversion(st,"soiltype","soilras.tif","CELL_CENTER","",cellsize)
 
 arcpy.env.workspace=folder
 
